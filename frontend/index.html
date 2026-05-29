@@ -32,8 +32,11 @@
             </div>
 
             <form id="authForm" class="space-y-4">
-                        <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1">Social Handle Contact</label>
-                        <input type="text" id="authHandle" placeholder="@instagram, @snapchat" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
+                
+                <div id="registerFields" class="hidden">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1">Email (UCF Recommended)</label>
+                        <input type="email" id="authEmail" placeholder="nid@knights.ucf.edu" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
                     </div>
                 </div>
 
@@ -73,7 +76,7 @@
             <h2 class="text-yellow-400 font-semibold uppercase tracking-wider text-sm mb-4 border-b border-zinc-800 pb-2">Filters</h2>
             <div class="mb-6">
                 <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">Search items</label>
-                <input type="text" id="searchInput" placeholder="What are you searching for?" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
+                <input type="text" id="searchInput" placeholder="What are you hunting for?" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
             </div>
             <div class="mb-6">
                 <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">Category</label>
@@ -88,7 +91,7 @@
             <div>
                 <div class="flex justify-between items-baseline mb-2">
                     <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider">Max Price</label>
-                    <span id="priceLabel" class="text-xs bg-yellow-500/10 text-yellow-400 font-bold px-2 py-0.5 rounded border border-yellow-500/20">$1500</span>
+                    <span id="priceLabel" class="text-xs bg-yellow-500/10 text-yellow-400 font-bold px-2 py-0.5 rounded border border-yellow-500/20">$1500+</span>
                 </div>
                 <input type="range" id="priceSlider" min="0" max="1500" value="1500" class="w-full accent-yellow-500 cursor-pointer bg-zinc-800 h-1.5 rounded-lg">
             </div>
@@ -96,18 +99,58 @@
 
         <section class="flex-1">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="listingsGrid">
+                
                 <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group">
-                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-600 font-mono text-sm">
+                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
                         <span>🏢 Housing Image Preview</span>
                     </div>
                     <div class="p-4 flex-1 flex flex-col justify-between">
-                        <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Plaza 4x4 Summer Sublease</h3>
-                            <span class="text-yellow-400 font-bold text-lg">$850</span>
+                        <div>
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Plaza 4x4 Summer Sublease</h3>
+                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$850<span class="text-[10px] text-zinc-500 font-normal">/mo</span></span>
+                            </div>
+                            <p class="text-xs text-zinc-400 mb-2 font-medium">📍 Plaza on University</p>
+                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Looking for someone to take over a room in a clean 4x4 layout for the summer semester. Great amenities...</p>
                         </div>
-                        <button class="w-full mt-4 bg-zinc-800 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg">View Details</button>
+                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
                     </div>
                 </div>
+
+                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group">
+                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
+                        <span>✨ Apparel Image Preview</span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Vintage Graphic Varsity Jacket</h3>
+                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$65</span>
+                            </div>
+                            <p class="text-xs text-zinc-400 mb-2 font-medium">📦 Size: Medium | Condition: Like New</p>
+                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Worn only once. Perfect heavy canvas weight overlay with drop shoulder tailoring layout.</p>
+                        </div>
+                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group">
+                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
+                        <span>📍 Item Image Preview</span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Dorm Size Mini Fridge</h3>
+                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$40</span>
+                            </div>
+                            <p class="text-xs text-zinc-400 mb-2 font-medium">📍 Pickup: Knights Circle Apartments</p>
+                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Perfect condition mini-fridge with small freezer section. Ideal size for Knights Circle dorm desks...</p>
+                        </div>
+                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
@@ -127,12 +170,12 @@
 
         let isLoginMode = true;
 
-        // Slider logic
+        // Price slider display counter logic
         slider.addEventListener('input', (e) => {
             label.textContent = e.target.value == 1500 ? '$1500+' : `$${e.target.value}`;
         });
 
-        // Toggle UI states between login and register inside the Modal wrapper
+        // Interactive switch controlling login view vs registration view
         toggleAuthBtn.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
             if(!isLoginMode) {
