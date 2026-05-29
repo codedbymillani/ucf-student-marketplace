@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCF Student Marketplace | Space U</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .space-bg {
@@ -18,9 +19,11 @@
 </head>
 <body class="h-full text-zinc-100 flex flex-col space-bg">
 
-    <div id="authModal" class="fixed inset-0 bg-zinc-950/90 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-md p-8 shadow-2xl transition-all">
+    <!-- AUTHENTICATION LAYOVER MODAL -->
+    <div id="authModal" class="fixed inset-0 bg-zinc-950/95 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-md p-8 shadow-2xl">
             
+            <!-- Header Group -->
             <div class="text-center mb-6">
                 <div class="flex justify-center mb-2">
                     <svg class="w-10 h-10 text-yellow-500 filter drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -31,15 +34,18 @@
                 <p class="text-xs text-zinc-400 mt-1" id="authSubtitle">Verify your identity to enter Space U</p>
             </div>
 
+            <!-- Single Dedicated Form Handler -->
             <form id="authForm" class="space-y-4">
                 
-                <div id="registerFields" class="hidden">
+                <!-- Toggleable Area: Registration Only Fields -->
+                <div id="registerFields" class="hidden space-y-4">
                     <div>
                         <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1">Email (UCF Recommended)</label>
                         <input type="email" id="authEmail" placeholder="nid@knights.ucf.edu" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
                     </div>
                 </div>
 
+                <!-- Core Fields Area: Permanently Visible and Structured -->
                 <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1">Username</label>
                     <input type="text" id="authUsername" required placeholder="knight_crawler" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
@@ -49,18 +55,21 @@
                     <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
                 </div>
 
+                <!-- Main Submit Controller Button -->
                 <button type="submit" id="authButton" class="w-full bg-yellow-500 hover:bg-yellow-400 text-zinc-950 font-bold uppercase tracking-wider text-xs py-2.5 rounded-lg shadow-lg transition duration-200 mt-2">
                     Sign In
                 </button>
             </form>
 
+            <!-- Mode Switch Link Toggle -->
             <div class="text-center mt-6 text-xs text-zinc-400">
                 <span id="toggleText">New around campus?</span>
-                <button id="toggleAuthMode" class="text-yellow-400 hover:underline ml-1 font-semibold focus:outline-none">Create Account</button>
+                <button id="toggleAuthMode" type="button" class="text-yellow-400 hover:underline ml-1 font-semibold focus:outline-none">Create Account</button>
             </div>
         </div>
     </div>
 
+    <!-- MAIN INTERFACE DASHBOARD (Reveals post authorization) -->
     <header class="bg-zinc-900/90 backdrop-blur-md border-b border-yellow-500/30 sticky top-0 z-50 px-6 py-4 flex items-center justify-between shadow-xl">
         <div class="flex items-center space-x-3">
             <svg class="w-7 h-7 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -68,15 +77,17 @@
             </svg>
             <span class="text-xl font-bold tracking-wider uppercase text-zinc-50">UCF Student <span class="text-yellow-400">Marketplace</span></span>
         </div>
-        <a href="post.html" class="bg-yellow-500 hover:bg-yellow-400 text-zinc-950 font-bold px-5 py-2.5 rounded-lg transition duration-200 shadow-[0_0_15px_rgba(234,179,8,0.3)] text-sm tracking-wide">+ Post Listing</a>
+        <button type="button" onclick="alert('Feature coming soon!')" class="bg-yellow-500 hover:bg-yellow-400 text-zinc-950 font-bold px-5 py-2.5 rounded-lg transition duration-200 text-sm tracking-wide">+ Post Listing</button>
     </header>
 
+    <!-- MAIN DISPLAY PLATFORM GRID -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-6 flex flex-col md:flex-row gap-8">
+        <!-- Sidebar Controllers -->
         <aside class="w-full md:w-64 flex-shrink-0 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5 h-fit sticky top-24 backdrop-blur-sm">
             <h2 class="text-yellow-400 font-semibold uppercase tracking-wider text-sm mb-4 border-b border-zinc-800 pb-2">Filters</h2>
             <div class="mb-6">
                 <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">Search items</label>
-                <input type="text" id="searchInput" placeholder="What are you hunting for?" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
+                <input type="text" placeholder="What are you hunting for?" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-yellow-500 transition">
             </div>
             <div class="mb-6">
                 <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2">Category</label>
@@ -84,73 +95,23 @@
                     <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Clothes & Shoes</span></label>
                     <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Housing & Subleases</span></label>
                     <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Appliances & Items</span></label>
-                    <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Services</span></label>
-                    <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Textbooks</span></label>
                 </div>
-            </div>
-            <div>
-                <div class="flex justify-between items-baseline mb-2">
-                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-wider">Max Price</label>
-                    <span id="priceLabel" class="text-xs bg-yellow-500/10 text-yellow-400 font-bold px-2 py-0.5 rounded border border-yellow-500/20">$1500+</span>
-                </div>
-                <input type="range" id="priceSlider" min="0" max="1500" value="1500" class="w-full accent-yellow-500 cursor-pointer bg-zinc-800 h-1.5 rounded-lg">
             </div>
         </aside>
 
+        <!-- Product Cards Showcase -->
         <section class="flex-1">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="listingsGrid">
-                
-                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group">
-                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
-                        <span>🏢 Housing Image Preview</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col p-4">
+                    <div class="aspect-video w-full bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-500 text-sm mb-3">
+                        <span>🏢 Sublease Preview</span>
                     </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-baseline mb-1">
-                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Plaza 4x4 Summer Sublease</h3>
-                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$850<span class="text-[10px] text-zinc-500 font-normal">/mo</span></span>
-                            </div>
-                            <p class="text-xs text-zinc-400 mb-2 font-medium">📍 Plaza on University</p>
-                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Looking for someone to take over a room in a clean 4x4 layout for the summer semester. Great amenities...</p>
-                        </div>
-                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-semibold text-zinc-100 text-base truncate">Knights Circle 4x4</h3>
+                        <span class="text-yellow-400 font-bold">$850</span>
                     </div>
+                    <p class="text-xs text-zinc-500">Summer layout sublease assignment. All utilities included.</p>
                 </div>
-
-                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group">
-                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
-                        <span>✨ Apparel Image Preview</span>
-                    </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-baseline mb-1">
-                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Vintage Graphic Varsity Jacket</h3>
-                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$65</span>
-                            </div>
-                            <p class="text-xs text-zinc-400 mb-2 font-medium">📦 Size: Medium | Condition: Like New</p>
-                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Worn only once. Perfect heavy canvas weight overlay with drop shoulder tailoring layout.</p>
-                        </div>
-                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
-                    </div>
-                </div>
-
-                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group">
-                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
-                        <span>📍 Item Image Preview</span>
-                    </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-baseline mb-1">
-                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Dorm Size Mini Fridge</h3>
-                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$40</span>
-                            </div>
-                            <p class="text-xs text-zinc-400 mb-2 font-medium">📍 Pickup: Knights Circle Apartments</p>
-                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Perfect condition mini-fridge with small freezer section. Ideal size for Knights Circle dorm desks...</p>
-                        </div>
-                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
-                    </div>
-                </div>
-
             </div>
         </section>
     </main>
@@ -159,9 +120,8 @@
         &copy; 2026 UCF Student Marketplace | <span class="text-yellow-500/70">Space U 🌌</span>
     </footer>
 
+    <!-- INTERACTION & SWITCH MECHANICS SCRIPT -->
     <script>
-        const slider = document.getElementById('priceSlider');
-        const label = document.getElementById('priceLabel');
         const toggleAuthBtn = document.getElementById('toggleAuthMode');
         const registerFields = document.getElementById('registerFields');
         const authBtn = document.getElementById('authButton');
@@ -170,12 +130,6 @@
 
         let isLoginMode = true;
 
-        // Price slider display counter logic
-        slider.addEventListener('input', (e) => {
-            label.textContent = e.target.value == 1500 ? '$1500+' : `$${e.target.value}`;
-        });
-
-        // Interactive switch controlling login view vs registration view
         toggleAuthBtn.addEventListener('click', () => {
             isLoginMode = !isLoginMode;
             if(!isLoginMode) {
@@ -194,6 +148,7 @@
         });
     </script>
 
+    <!-- CORE LOGIC ATTACHMENT LINK -->
     <script src="app.js"></script>
 </body>
 </html>
