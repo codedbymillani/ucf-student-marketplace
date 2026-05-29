@@ -1,47 +1,48 @@
-// The web address where your Java Spring Boot server runs local testing
+// Server communication configuration baseline address
 const API_BASE_URL = 'http://localhost:8080/api';
 
-// Track the current logged-in user state in the browser's temporary memory
+// Current session identity marker tracker 
 let currentUser = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     initAuthEngine();
-    initListingEngine();
 });
 
 /**
- * 1. THE AUTHENTICATION ENGINE
- * Handles logging in, registration, and strict data validation rules.
+ * CORE AUTHENTICATION LOGIC ENGINE
+ * Evaluates conditions and orchestrates interface lockouts or successes.
  */
 function initAuthEngine() {
     const authForm = document.getElementById('authForm');
     const authModal = document.getElementById('authModal');
     
+    if (!authForm) return;
+
     authForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Stop page from refreshing automatically
+        e.preventDefault(); // Halt normal layout submission browser refresh
         
-        // Pull values directly out of the inputs
+        // Extract raw form value configurations
         const username = document.getElementById('authUsername').value.trim();
         const password = document.getElementById('authPassword').value;
         const email = document.getElementById('authEmail')?.value.trim();
         
-        // Determine mode based on whether the Register box is open
+        // Determine view intent state by parsing form toggle component
         const isRegisterMode = !document.getElementById('registerFields').classList.contains('hidden');
 
-        // UX STIPULATION: Password Length Rules
+        // RULE: Strict security length checks
         if (password.length < 8) {
-            alert("⚠️ Security Rule: Password must be at least 8 characters long!");
+            alert("⚠️ Account Restriction: Security mandates passwords contain a minimum of 8 characters.");
             return;
         }
 
         if (isRegisterMode) {
-            // Campus Policy Structure Check
+            // RULE: Regional campus safety check
             if (!email.endsWith('.edu')) {
-                alert("⚠️ Campus Policy: Registration requires a valid university (.edu) email address.");
+                alert("⚠️ Access Denied: Space U marketplace privileges require an authenticated university (.edu) email registry.");
                 return;
             }
 
-            // PACKAGE DATA FOR BACKEND
+            // Create network delivery payload structure
             const registerPayload = {
                 username: username,
                 email: email,
@@ -49,7 +50,7 @@ function initAuthEngine() {
             };
 
             try {
-                // Try sending to the real Java Server
+                // Route transmission targeting operational Spring Boot server instances
                 const response = await fetch(`${API_BASE_URL}/users/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -57,38 +58,38 @@ function initAuthEngine() {
                 });
 
                 if (response.ok) {
-                    alert(`✅ Account successfully created for ${username}! You can now use these credentials to sign in.`);
-                    document.getElementById('toggleAuthMode').click(); // Switch back to Sign In view automatically
+                    alert(`✅ Registration Success! Account database profile established for ${username}. Proceeding to login views.`);
+                    document.getElementById('toggleAuthMode').click(); // Revert modal layouts
                 } else {
                     const errorMsg = await response.text();
-                    alert(`❌ Registration Failed: ${errorMsg}`);
+                    alert(`❌ Core Registry Refusal: ${errorMsg}`);
                 }
             } catch (err) {
-                console.warn("Java Backend offline. Switching to Browser-Database simulation for testing...");
+                console.warn("Spring Boot testing database unreachable. Transitioning to integrated browser localStorage backup storage logic...");
                 
-                // OFFLINE BACKUP SIMULATION: Save to Browser Disk
+                // FALLBACK INTERACTIVE SYSTEM: Simulated Disk Arrays
                 const localUsers = JSON.parse(localStorage.getItem('space_u_users') || '[]');
                 
-                // Check if username already exists locally
+                // Duplicate identity conflict evaluations
                 if (localUsers.find(u => u.username === username)) {
-                    alert("❌ Registration Failed: That username is already taken on this device!");
+                    alert("❌ Registry Collision: That specific user handle name is already claimed within this platform simulation environment.");
                     return;
                 }
 
+                // Append and seal the storage structural block array
                 localUsers.push({ username, password, email });
                 localStorage.setItem('space_u_users', JSON.stringify(localUsers));
 
-                // SUCCESS UX CONFIRMATION
-                alert(`🎉 Account Successfully Created!\n\nUser "${username}" has been saved to local browser memory. Click "OK" to head to the login screen and sign in!`);
+                // CLEAR COMPREHENSIVE SUCCESS UX NOTIFICATION
+                alert(`🎉 Success! Verification Account Profile Created!\n\nUser "${username}" has been fully cached onto your web browser profile client files. Click OK to head to login screen verification.`);
                 
-                // Smoothly toggle the interface back to Sign In view
+                // Shift screen presentation values back to input view panels automatically
                 document.getElementById('toggleAuthMode').click();
             }
 
         } else {
-            // LOGIN VERIFICATION LOGIC
+            // LOGIN SYSTEM VERIFICATION LOGIC PATHS
             try {
-                // Try verifying with the live server first
                 const response = await fetch(`${API_BASE_URL}/users/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -97,35 +98,24 @@ function initAuthEngine() {
 
                 if (response.ok) {
                     currentUser = username;
-                    authModal.classList.add('hidden');
-                    alert(`⚡ Welcome back to Space U, ${username}!`);
+                    authModal.classList.add('hidden'); // Clear visual blockades
+                    alert(`⚡ Authorization Confirmed. Welcome back to Space U channels, ${username}!`);
                 } else {
-                    alert("❌ Invalid username or password combination.");
+                    alert("❌ Clearance Refused: Valid credentials matching that tracking layout profile matrix do not register.");
                 }
             } catch (err) {
-                // OFFLINE BACKUP SIMULATION: Read from Browser Disk
+                // FALLBACK LOCAL AUTHENTICATION CONFIRMATION 
                 const localUsers = JSON.parse(localStorage.getItem('space_u_users') || '[]');
                 const foundUser = localUsers.find(u => u.username === username && u.password === password);
 
                 if (foundUser) {
                     currentUser = username;
-                    authModal.classList.add('hidden'); // Unlock the marketplace screen!
-                    alert(`⚡ Success! Logged in locally as: ${username}`);
+                    authModal.classList.add('hidden'); // Unlock main dashboard display interface layout
+                    alert(`⚡ Client Offline Authorization Granted: Welcome back, ${username}.`);
                 } else {
-                    alert("❌ Authentication Failed: Incorrect username/password or account does not exist yet!");
+                    alert("❌ Clearance Refused: No matching user metrics discovered on local device configurations. Verify layout fields or complete a registration loop first!");
                 }
             }
         }
     });
-}
-
-function initListingEngine() {
-    const listingForm = document.getElementById('listingForm');
-    if (listingForm) {
-        listingForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert("✨ Listing published successfully to the marketplace feed!");
-            window.location.href = 'index.html';
-        });
-    }
 }
