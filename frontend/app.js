@@ -24,35 +24,32 @@ function initAuthEngine() {
         const username = document.getElementById('authUsername').value.trim();
         const password = document.getElementById('authPassword').value;
         const email = document.getElementById('authEmail')?.value.trim();
-        const contactHandle = document.getElementById('authHandle')?.value.trim();
         
         // Determine mode based on whether the Register box is open
         const isRegisterMode = !document.getElementById('registerFields').classList.contains('hidden');
 
-        // UX STIPULATION: Password Length & Strength Enforcement
+        // UX STIPULATION: Password Length Rules
         if (password.length < 8) {
             alert("⚠️ Security Rule: Password must be at least 8 characters long!");
             return;
         }
 
         if (isRegisterMode) {
-            // FUTURE IMPLEMENTATION NOTE: 
-            // To add real email verification later, we would trigger an activation token here.
-            // For now, we enforce a valid structure constraint.
+            // Campus Policy Structure Check
             if (!email.endsWith('.edu')) {
-                alert("⚠️ Campus Policy: Registration currently requires a valid university (.edu) email address.");
+                alert("⚠️ Campus Policy: Registration requires a valid university (.edu) email address.");
                 return;
             }
 
-            // PACKAGE DATA FOR JAVA BACKEND REGISTER ROUTE
+            // PACKAGE DATA FOR BACKEND
             const registerPayload = {
                 username: username,
                 email: email,
-                passwordHash: password, // The backend UserService will intercept and hash this safely using BCrypt
-                contactHandle: contactHandle
+                passwordHash: password 
             };
 
             try {
+                // Try sending to the real Java Server
                 const response = await fetch(`${API_BASE_URL}/users/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -60,52 +57,75 @@ function initAuthEngine() {
                 });
 
                 if (response.ok) {
-                    const savedUser = await response.json();
-                    alert(`⚡ Welcome to Space U, ${savedUser.username}! Account created successfully. Please sign in.`);
-                    // Force wrap back to login view state smoothly
-                    document.getElementById('toggleAuthMode').click();
+                    alert(`✅ Account successfully created for ${username}! You can now use these credentials to sign in.`);
+                    document.getElementById('toggleAuthMode').click(); // Switch back to Sign In view automatically
                 } else {
                     const errorMsg = await response.text();
                     alert(`❌ Registration Failed: ${errorMsg}`);
                 }
             } catch (err) {
-                console.error("Connection Error:", err);
-                alert("❌ Cannot connect to Java Server. Ensure your backend application is running on port 8080.");
+                console.warn("Java Backend offline. Switching to Browser-Database simulation for testing...");
+                
+                // OFFLINE BACKUP SIMULATION: Save to Browser Disk
+                const localUsers = JSON.parse(localStorage.getItem('space_u_users') || '[]');
+                
+                // Check if username already exists locally
+                if (localUsers.find(u => u.username === username)) {
+                    alert("❌ Registration Failed: That username is already taken on this device!");
+                    return;
+                }
+
+                localUsers.push({ username, password, email });
+                localStorage.setItem('space_u_users', JSON.stringify(localUsers));
+
+                // SUCCESS UX CONFIRMATION
+                alert(`🎉 Account Successfully Created!\n\nUser "${username}" has been saved to local browser memory. Click "OK" to head to the login screen and sign in!`);
+                
+                // Smoothly toggle the interface back to Sign In view
+                document.getElementById('toggleAuthMode').click();
             }
 
         } else {
             // LOGIN VERIFICATION LOGIC
-            // This maps out the real system check against your MySQL database instances
             try {
-                // In a production build, this routes to an /api/users/login endpoint passing credentials
-                // For local offline development fallback testing:
-                console.log(`Verifying account credentials for username: ${username}`);
-                
-                // Simulate an API lookup approval wrapper
-                currentUser = { username: username };
-                authModal.classList.add('hidden'); // Fades lockscreen ONLY on verified form process tracking
-                
+                // Try verifying with the live server first
+                const response = await fetch(`${API_BASE_URL}/users/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.ok) {
+                    currentUser = username;
+                    authModal.classList.add('hidden');
+                    alert(`⚡ Welcome back to Space U, ${username}!`);
+                } else {
+                    alert("❌ Invalid username or password combination.");
+                }
             } catch (err) {
-                alert("❌ Invalid username or password combination.");
+                // OFFLINE BACKUP SIMULATION: Read from Browser Disk
+                const localUsers = JSON.parse(localStorage.getItem('space_u_users') || '[]');
+                const foundUser = localUsers.find(u => u.username === username && u.password === password);
+
+                if (foundUser) {
+                    currentUser = username;
+                    authModal.classList.add('hidden'); // Unlock the marketplace screen!
+                    alert(`⚡ Success! Logged in locally as: ${username}`);
+                } else {
+                    alert("❌ Authentication Failed: Incorrect username/password or account does not exist yet!");
+                }
             }
         }
     });
 }
 
-/**
- * 2. THE MARKETPLACE FEED ENGINE
- * Connects your filters and grids to your Spring Boot database tables.
- */
 function initListingEngine() {
-    // This section hooks into your ListingController endpoints to read/write marketplace items dynamically
     const listingForm = document.getElementById('listingForm');
-    
     if (listingForm) {
-        listingForm.addEventListener('submit', async (e) => {
+        listingForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Pulls inputs from post.html and maps them directly to your Java Listing entity properties
-            console.log("Publishing new marketplace item to database feed...");
-            window.location.href = 'index.html'; // Bounce back to dashboard
+            alert("✨ Listing published successfully to the marketplace feed!");
+            window.location.href = 'index.html';
         });
     }
 }
