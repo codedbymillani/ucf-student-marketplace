@@ -32,6 +32,7 @@
             </div>
 
             <form id="authForm" class="space-y-4">
+                
                 <div id="registerFields" class="hidden space-y-4">
                     <div>
                         <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1">Email (UCF Recommended)</label>
@@ -68,7 +69,7 @@
             </svg>
             <span class="text-xl font-bold tracking-wider uppercase text-zinc-50">UCF Student <span class="text-yellow-400">Marketplace</span></span>
         </div>
-        <a href="post.html" class="bg-yellow-500 hover:bg-yellow-400 text-zinc-950 font-bold px-5 py-2.5 rounded-lg transition duration-200 shadow-[0_0_15px_rgba(234,179,8,0.3)] text-sm tracking-wide">+ Post Listing</a>
+        <a href="post.html" class="bg-yellow-500 hover:bg-yellow-400 text-zinc-950 font-bold px-5 py-2.5 rounded-lg transition duration-200 text-sm tracking-wide">+ Post Listing</a>
     </header>
 
     <main class="flex-1 max-w-7xl w-full mx-auto p-6 flex flex-col md:flex-row gap-8">
@@ -84,8 +85,6 @@
                     <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Clothes & Shoes</span></label>
                     <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Housing & Subleases</span></label>
                     <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Appliances & Items</span></label>
-                    <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Services</span></label>
-                    <label class="flex items-center space-x-3 cursor-pointer group"><input type="checkbox" class="accent-yellow-500 rounded"><span class="text-zinc-300 group-hover:text-zinc-100 transition">Textbooks</span></label>
                 </div>
             </div>
             <div>
@@ -100,38 +99,26 @@
         <section class="flex-1">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="listingsGrid">
                 
-                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group border border-zinc-800">
-                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
-                        <span>🏢 Housing Image Preview</span>
+                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col p-4">
+                    <div class="aspect-video w-full bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-500 text-sm mb-3">
+                        <span>🏢 Housing Preview</span>
                     </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-baseline mb-1">
-                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Plaza 4x4 Summer Sublease</h3>
-                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$850</span>
-                            </div>
-                            <p class="text-xs text-zinc-400 mb-2 font-medium">📍 Plaza on University</p>
-                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Looking for someone to take over a room in a clean 4x4 layout for the summer semester. Great roommates.</p>
-                        </div>
-                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-semibold text-zinc-100 text-base truncate">Knights Circle 4x4</h3>
+                        <span class="text-yellow-400 font-bold">$850</span>
                     </div>
+                    <p class="text-xs text-zinc-500">Summer layout sublease assignment. All utilities included.</p>
                 </div>
 
-                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col group border border-zinc-800">
-                    <div class="aspect-video w-full bg-zinc-800 relative flex items-center justify-center text-zinc-500 text-sm font-medium">
-                        <span>✨ Apparel Image Preview</span>
+                <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden shadow-lg flex flex-col p-4">
+                    <div class="aspect-video w-full bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-500 text-sm mb-3">
+                        <span>✨ Apparel Preview</span>
                     </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-baseline mb-1">
-                                <h3 class="font-semibold text-zinc-100 text-base truncate pr-2">Vintage Varsity Jacket</h3>
-                                <span class="text-yellow-400 font-bold text-base flex-shrink-0">$65</span>
-                            </div>
-                            <p class="text-xs text-zinc-400 mb-2 font-medium">📦 Size: Medium | Condition: Like New</p>
-                            <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">Worn only once. Perfect heavy canvas weight overlay with drop shoulder tailoring layout.</p>
-                        </div>
-                        <button class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs tracking-wider uppercase py-2 rounded-lg transition">View Details</button>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-semibold text-zinc-100 text-base truncate">Vintage Varsity Jacket</h3>
+                        <span class="text-yellow-400 font-bold">$65</span>
                     </div>
+                    <p class="text-xs text-zinc-500">Worn once. Drop shoulder tailoring layout size M.</p>
                 </div>
 
             </div>
@@ -151,7 +138,9 @@
         const slider = document.getElementById('priceSlider');
         const label = document.getElementById('priceLabel');
 
-        // Dynamic price slider text counter layout logic
+        // FIXED: Explicit declaration added to prevent silent script failure
+        let isLoginMode = true; 
+
         slider.addEventListener('input', (e) => {
             label.textContent = e.target.value == 1500 ? '$1500+' : `$${e.target.value}`;
         });
