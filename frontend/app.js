@@ -1,17 +1,10 @@
-// Server communication configuration baseline address
 const API_BASE_URL = 'http://localhost:8080/api';
-
-// Current session identity marker tracker 
 let currentUser = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     initAuthEngine();
 });
 
-/**
- * CORE AUTHENTICATION LOGIC ENGINE
- * Evaluates conditions and orchestrates interface lockouts or successes.
- */
 function initAuthEngine() {
     const authForm = document.getElementById('authForm');
     const authModal = document.getElementById('authModal');
@@ -19,30 +12,26 @@ function initAuthEngine() {
     if (!authForm) return;
 
     authForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Halt normal layout submission browser refresh
+        e.preventDefault(); 
         
-        // Extract raw form value configurations
         const username = document.getElementById('authUsername').value.trim();
         const password = document.getElementById('authPassword').value;
         const email = document.getElementById('authEmail')?.value.trim();
         
-        // Determine view intent state by parsing form toggle component
         const isRegisterMode = !document.getElementById('registerFields').classList.contains('hidden');
 
-        // RULE: Strict security length checks
-        if (password.length < 8) {
-            alert("⚠️ Account Restriction: Security mandates passwords contain a minimum of 8 characters.");
+        // FIXED: Enforcing explicit password strength requirements on account creation loops
+        if (isRegisterMode && password.length < 8) {
+            alert("⚠️ Account Rule: Your password must be at least 8 characters long to keep your student account secure!");
             return;
         }
 
         if (isRegisterMode) {
-            // RULE: Regional campus safety check
             if (!email.endsWith('.edu')) {
-                alert("⚠️ Access Denied: Space U marketplace privileges require an authenticated university (.edu) email registry.");
+                alert("⚠️ Access Denied: Space U marketplace features require an active university (.edu) email registry.");
                 return;
             }
 
-            // Create network delivery payload structure
             const registerPayload = {
                 username: username,
                 email: email,
@@ -50,7 +39,6 @@ function initAuthEngine() {
             };
 
             try {
-                // Route transmission targeting operational Spring Boot server instances
                 const response = await fetch(`${API_BASE_URL}/users/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -58,37 +46,31 @@ function initAuthEngine() {
                 });
 
                 if (response.ok) {
-                    alert(`✅ Registration Success! Account database profile established for ${username}. Proceeding to login views.`);
-                    document.getElementById('toggleAuthMode').click(); // Revert modal layouts
+                    alert(`✅ Account created for ${username}! You can now use these credentials to sign in.`);
+                    document.getElementById('toggleAuthMode').click(); 
                 } else {
                     const errorMsg = await response.text();
-                    alert(`❌ Core Registry Refusal: ${errorMsg}`);
+                    alert(`❌ Registration Failed: ${errorMsg}`);
                 }
             } catch (err) {
-                console.warn("Spring Boot testing database unreachable. Transitioning to integrated browser localStorage backup storage logic...");
+                console.warn("Spring Boot offline. Saving profile to local browser storage...");
                 
-                // FALLBACK INTERACTIVE SYSTEM: Simulated Disk Arrays
                 const localUsers = JSON.parse(localStorage.getItem('space_u_users') || '[]');
                 
-                // Duplicate identity conflict evaluations
                 if (localUsers.find(u => u.username === username)) {
-                    alert("❌ Registry Collision: That specific user handle name is already claimed within this platform simulation environment.");
+                    alert("❌ Registration Failed: That username is already claimed on this device.");
                     return;
                 }
 
-                // Append and seal the storage structural block array
                 localUsers.push({ username, password, email });
                 localStorage.setItem('space_u_users', JSON.stringify(localUsers));
 
-                // CLEAR COMPREHENSIVE SUCCESS UX NOTIFICATION
-                alert(`🎉 Success! Verification Account Profile Created!\n\nUser "${username}" has been fully cached onto your web browser profile client files. Click OK to head to login screen verification.`);
-                
-                // Shift screen presentation values back to input view panels automatically
+                alert(`🎉 Account Successfully Created!\n\nUser "${username}" is stored locally. Click OK to return to the sign-in screen.`);
                 document.getElementById('toggleAuthMode').click();
             }
 
         } else {
-            // LOGIN SYSTEM VERIFICATION LOGIC PATHS
+            // LOGIN LOGIC PATH
             try {
                 const response = await fetch(`${API_BASE_URL}/users/login`, {
                     method: 'POST',
@@ -98,22 +80,21 @@ function initAuthEngine() {
 
                 if (response.ok) {
                     currentUser = username;
-                    authModal.classList.add('hidden'); // Clear visual blockades
-                    alert(`⚡ Authorization Confirmed. Welcome back to Space U channels, ${username}!`);
+                    authModal.classList.add('hidden'); 
+                    alert(`⚡ Welcome back to Space U, ${username}!`);
                 } else {
-                    alert("❌ Clearance Refused: Valid credentials matching that tracking layout profile matrix do not register.");
+                    alert("❌ Invalid credentials. Check your username and password combination.");
                 }
             } catch (err) {
-                // FALLBACK LOCAL AUTHENTICATION CONFIRMATION 
                 const localUsers = JSON.parse(localStorage.getItem('space_u_users') || '[]');
                 const foundUser = localUsers.find(u => u.username === username && u.password === password);
 
                 if (foundUser) {
                     currentUser = username;
-                    authModal.classList.add('hidden'); // Unlock main dashboard display interface layout
-                    alert(`⚡ Client Offline Authorization Granted: Welcome back, ${username}.`);
+                    authModal.classList.add('hidden'); // Clear overlay modal
+                    alert(`⚡ Success! Logged in locally as: ${username}`);
                 } else {
-                    alert("❌ Clearance Refused: No matching user metrics discovered on local device configurations. Verify layout fields or complete a registration loop first!");
+                    alert("❌ Authentication Failed: Incorrect password or profile does not exist yet.");
                 }
             }
         }
